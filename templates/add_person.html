@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<style>
+	.login{
+		max-width: 500px;
+		margin: auto;
+		padding: 20px;
+		/*border: solid 1px blue;*/
+		}
+</style>
+<div class="login">
+	<form method="POST">
+		<h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+		  <small class="alert-danger text-left"><?php echo form_error('passwd'); ?></small>
+		  <div class="form-group">
+		  <label for="nom" class="sr-only">Nom</label>
+		  <input type="text" name="nom" id="nom" class="form-control" value="" placeholder="Nom de famille" required autofocus>
+		  <small class="alert-danger text-left"><?php echo form_error('nom'); ?></small>
+		  </div>
+		  <div class="form-group">
+		  <label for="prenom" class="sr-only">Prenom</label>
+		  <input type="text" name="prenom" id="prenom" class="form-control" value="" placeholder="Prenoms" required>
+		  <small class="alert-danger text-left"><?php echo form_error('prenom'); ?></small>
+		  </div>
+		  <div class="form-group text-left">
+		  <label for="niveau" class="sr-only">Niveau:</label>
+		  <select name="auth_level" id="niveau" class="form-control">
+			  <option value="" >Sélectionner niveau</option>
+			  <option value="3" >Troisieme</option>
+			  <option value="4" >Quatrieme</option>
+		  </select>
+		  <small class="alert-danger text-left"><?php echo form_error('auth_level'); ?></small>
+		  </div>
+		  <div class="form-group">
+		  <label for="email" class="sr-only">Prénom</label>
+		  <input type="text" name="email" id="email" class="form-control" value="" placeholder="Adresse Email" required>
+		  <small class="alert-danger text-left"><?php echo form_error('email'); ?></small>
+		  </div>
+		  <div class="form-group">
+		  <label for="login_string" class="sr-only">Pseudo</label>
+		  <input type="text" name="username" id="login_string" class="form-control" value="" placeholder="Nom utilisateur" required>
+		  <small class="alert-danger text-left"><?php echo form_error('username'); ?></small>
+		  </div>
+		  <div class="form-group">
+		  <label for="login_pass" class="sr-only">Mot de passe</label>
+		  <input type="password" name="passwd" id="login_pass" class="form-control" placeholder="Mot de passe" required>	  
+		  </div>
+		  <div class="form-group">
+		  <label for="login_pass_conf" class="sr-only">Confirmation Mot de passe</label>
+		  <input type="password" name="passwd_conf" id="login_pass_conf" class="form-control" placeholder="Confirmer Mot de passe" required>	  
+		  </div>
+			<p class="text-center"><a href="{{url_for('login')}}">J'ai déjà un compte !</a></p>
+		  <div class="form-group">
+		  <button type="submit" class="btn btn-lg btn-primary btn-block" name="submit">S'inscrire</button>
+		  </div>
+	</form>
+</div>
+{% endblock body %}
+
