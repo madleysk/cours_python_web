@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ma page web</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/style1.css" >
+	<style>
+		body {
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1 class="slogan">{{ headline }}</h1>
+	<div class="container">
+		{% if isapril %}
+		<h1>{{ isapril }}, it is April !</h1>
+		{% else %}
+			<h1>{{ isapril }}, It is not April !</h1>
+		{% endif %}
+	</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div>
+	<h3>Table Creation Wizzard</h3>
+	<form>
+		<button type="button" class="btn-sm btn-primary" id="addField_btn" onclick="add_field()">Add field</button>
+	</form>
+	<div id="wizcontainer" class="row">
+		
+	</div>
+</div>
+<script>
+	function add_field(){
+		//alert("Hello World !");
+		actual = document.getElementById('wizcontainer').innerHTML;
+		document.getElementById('wizcontainer').innerHTML = actual + new_field(desc='New field', type='text', name='nom', classe='form-control', id='', placeholder='Nouveau champs');
+	}
+	function new_field(desc='New field', type='text', name='', classe='form-input', id='', placeholder=''){
+		html= '<input type="'+type+'" name="'+name+'" class="'+classe+'" id="'+id+'" placeholder="'+placeholder+'" />';
+		return '<div class="form-group col-md-6" >'+html+'</div>';
+	}
+	function new_select_ops(desc='New field', name='', classe='form-input', id='', contenu=''){
+		opts= '';
+		html= '<select name="" id="" class="">'
+				+'</select>'
+		return html;
+	}
+</script>
+{% endblock body %}
+

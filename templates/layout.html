@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ dico['page_title'] }}</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- Menu -->
+	<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href= {{dico['app_url']}}>REMA PROD</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+		  <li class="nav-item active">
+			<a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+		  </li>
+		  <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  Cours
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			  <a class="dropdown-item" href="">Technologie 3e</a>
+			  <a class="dropdown-item" href="">Technologie 4e</a>
+			  <div class="dropdown-divider"></div>
+			</div>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#" title="Foire aux questions" >FAQ</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#">Contact</a>
+		  </li>
+		</ul>
+		<div class="pull-right">
+			{% if session['username'] %}
+			<span>Welcome, {{ session['username'] }} - </span>
+			<a href= {{ url_for('logout')}} >Deconnexion</a>
+			{% else %}
+			<a class="mr-2" href= {{ url_for('subscribe')}} >Inscription</a>
+			<a class="" href= {{ url_for('login')}} >Connexion</a>
+			{% endif %}
+		</div>
+	  </div>
+	</nav>
+	<!-- End Menu -->
+	<!-- Headline -->
+	<div class="jumbotron text-center">
+		{% if headline != "" %}
+			<h2>{{ headline }}</h2>
+		{% endif %}
+	</div>
+	<!-- End Headline -->
+	<div class="container" style="min-height:200px;">
+		
+		{% block headings %}
+		{% endblock headings %}
+		
+		{% block body %}
+		{% endblock body %}
+	</div>
+	<div class="footer">
+		<footer class="jumbotron text-center" style="margin:0;">
+			<div class="row text-center">
+				<div class="col-md-4">
+					<h4>Medias</h4>
+				</div>
+				<div class="col-md-4">
+					<h4>Contact</h4>
+				</div>
+				<div class="col-md-4">
+					<h4>Reference</h4>
+				</div>
+			</div>
+		</footer>
+		<div class="text-center">
+			  <p class="pull-center">&copy; {{dico['annee']}}</p>
+		</div>
+	</div>
+</body>
+</html>
