@@ -11,7 +11,7 @@
 <body>
 	<!-- Menu -->
 	<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href= {{dico['app_url']}}>REMA PROD</a>
+	  <a class="navbar-brand" href="{{url_for('index')}}">REMA PROD</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	  </button>
@@ -19,7 +19,7 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
 		  <li class="nav-item active">
-			<a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+			<a class="nav-link" href="{{url_for('index')}}">Accueil <span class="sr-only">(current)</span></a>
 		  </li>
 		  <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,6 +34,19 @@
 		  <li class="nav-item">
 			<a class="nav-link" href="#" title="Foire aux questions" >FAQ</a>
 		  </li>
+		{% if session['auth_level'] == 9 %}
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Administration
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			  <a class="dropdown-item" href="/list_users">List users</a>
+			  <a class="dropdown-item" href="/add_person">Add Person</a>
+			  <div class="dropdown-divider"></div>
+			</div>
+		</li>
+
+		{% endif %}
 		  <li class="nav-item">
 			<a class="nav-link" href="#">Contact</a>
 		  </li>

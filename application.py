@@ -34,7 +34,6 @@ except:
 def index():
 	dico['page_title'] = page_title+" - Accueil"
 	isapril = verifApril()
-	#db.drop_all()
 	#init_db() # To create application database tables and default admin
 	return render_template("layout.html",dico=dico,headline=headline)
 
@@ -49,17 +48,20 @@ def login():
 				passwd = request.form.get('passwd')
 				if(auth.pass_verify(passwd,res.passwd)):
 					session['username'] = username
+					session['auth_level'] = res.auth_level
 					return redirect(username)
 				else:
-					return "Password incorrect"
+					return render_template("login.html", dico=dico,headline=headline,errPWD='Password incorrect')
 		else:
-			return "Username/Password incorrect"
+			return render_template("login.html", dico=dico,headline=headline, errUSR="Username does not exist !")
 	return render_template("login.html", dico=dico,headline=headline )
 	    
 @app.route('/logout')
 def logout():
 	# remove the username from the session if it's there
-	session.pop('username', None)
+	#session.pop('username', None)
+	#session.pop('auth_level', None)
+	session.clear()
 	return redirect(url_for('index'))
 
 @app.route('/subscribe', methods=['GET','POST'])
@@ -88,10 +90,37 @@ def subscribe():
 			db.session.commit()
 			return 'Registration succeed !'
 	return render_template("signup.html", dico=dico,headline=headline )
-     
-@app.route("/add_person")
+
+@app.route("/list_users")
+def list_users():
+	try:
+		if session['auth_level'] == 9:
+			entetes=['id','nom','prenom','code','email','adresse','telephone','niveau']
+			user_list = Personne.query.all()
+			return render_template("administration.html",dico=dico,headline=headline,entetes=entetes,user_list=user_list)
+
+	except:
+		return render_template("administration.html",dico=dico,headline=headline,entetes=None,user_list=None)
+
+@app.route("/add_person", methods=['GET','POST'])
 def add_person():
-	return render_template("add_person.html",dico=dico, isapril=isapril)
+	if request.method == 'POST':
+		nom = request.form.get('nom')
+		prenom = request.form.get('prenom')
+		code = request.form.get('code')
+		email = request.form.get('email')
+		adresse = request.form.get('adresse')
+		telephone = request.form.get('telephone')
+		niveau = request.form.get('niveau')
+                
+		if form_validation ([nom,prenom,code,email,adresse,telephone,niveau]):
+			new_person = Personne(nom,prenom,code,email,adresse,telephone,niveau)
+			db.session.add(new_person)
+			db.session.commit()
+		else:
+			return render_template("add_person.html",dico=dico,headline=headline,errMSG='Verifier champs !')
+
+	return render_template("add_person.html",dico=dico,headline=headline)
 
 @app.route("/<string:name>")
 def hello(name):
@@ -99,7 +128,7 @@ def hello(name):
 	try:
 		if session['username']:
 			msg = 'Vous allez etre redirige dans 10 secondes.'+'<meta http-equiv="refresh" content="10;url=/">'
-			return f"Hello, {name} !"+ msg
+			return f"Hello, {name} ! "+ msg
 	except KeyError:
 		return f"Hello, {name} !"
 	return f"Hello, {name} !"
@@ -107,11 +136,14 @@ def hello(name):
 @app.route("/form", methods=["POST","GET"])
 def form():
 	dico['page_title'] = page_title+" - Inscription"
-	if (request.method == "POST"):
-		prenom = request.form.get('prenom')
-		return render_template("form.html",dico=dico,headline=headline,prenom=prenom,)
 	return render_template("form.html",dico=dico,headline=headline)
-	
+
+def form_validation(liste):
+	for champ in liste:
+		if champ == '' or champ is None:
+			return False
+	return True
+
 @app.route("/db_wizzard")
 def db_wizzard():
 	return render_template("db_wizzard.html",dico=dico,headline=headline )
@@ -139,6 +171,7 @@ def init_db():
 	except:
 		return 'error occured'
 def create_default_users():
+	db.drop_all() # erasing everything first
 	# default levels
 	niveaux = {"00":"N/A","01":"Premiere Annee","02":"Deuxieme Annee","03":"Troisieme Annee","04":"Quatrieme Annee","05":"Cinquieme Annee"}
 	for key, val in niveaux.items():
@@ -147,6 +180,14 @@ def create_default_users():
 	db.session.commit() # validate insert cause foreign key dependencies
 	admin_infos = Personne(nom='Administrator',prenom='Flask Adm',code='ADM-01',email='admin@flaskapp.com',adresse='Haiti',telephone='509',niveau=00)
 	db.session.add(admin_infos)
+	db.session.commit() # validate insert cause foreign key dependencies
+	roles =  {}
+	roles['01']='user'
+	roles['02']='superuser'
+	roles['03']='manager'
+	roles['09']='admin'
+	for  v,k in roles.items():
+		db.session.add(Role(int(v),k))
 	db.session.commit() # validate insert cause foreign key dependencies
 	admin_user = Users('admin',auth.pass_hashing('Pass0321'),9,'ADM-01')
 	db.session.add(admin_user)

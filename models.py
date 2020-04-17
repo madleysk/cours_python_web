@@ -34,14 +34,24 @@ class Personne(db.Model):
 		self.telephone = telephone
 		self.niveau = niveau
 
+class Role(db.Model):
+	__tablename__ = "roles"
+	id = db.Column(db.Integer, primary_key=True)
+	auth_level = db.Column(db.Integer,unique=True,nullable=False)
+	role_desc = db.Column(db.String(50),nullable=False) 
+
+	def __init__(self,auth_level,role_desc):
+		self.auth_level = auth_level
+		self.role_desc = role_desc
+
 class Users(db.Model):
 	__tablename__ = "users"
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(40),unique=True,nullable = False)
 	passwd = db.Column(db.String(256),nullable = False)
-	auth_level = db.Column(db.Integer,nullable = False)
+	auth_level = db.Column(db.Integer,db.ForeignKey("roles.auth_level"),nullable = False)
 	code = db.Column(db.String(30),db.ForeignKey("personnes.code"),nullable= False)
-	
+
 	def __init__(self,username,passwd,auth_level,code):
 		self.username = username
 		self.passwd = passwd

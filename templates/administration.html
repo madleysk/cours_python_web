@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<style>
+	.login{
+		max-width: 500px;
+		margin: auto;
+		padding: 20px;
+		/*border: solid 1px blue;*/
+		}
+</style>
+<div class="">
+	<h1>List of users</h1>
+ {% if user_list %}
+        <div class="table-responsive">
+			<table class="table">
+				
+				{% for entete in entetes %}
+					<th>{{entete}}</th>
+				{% endfor %}
+				
+				{% for user in user_list %}
+					<tr>
+					<td>{{user.id}}</td>
+					<td>{{user.nom}}</td>
+					<td>{{user.prenom}}</td>
+					<td>{{user.code}}</td> 
+					<td>{{user.email}}</td>
+					<td>{{user.adresse}}</td>
+					<td>{{user.telephone}}</td>  
+					<td>{{user.niveau}}</td>  
+					</tr>
+				{% endfor %}
+			</table>
+        </div>
+{% else %}
+        <h4>No User found</h4>
+{% endif %}
+</div>
+{% endblock body %}
+

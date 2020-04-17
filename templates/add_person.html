@@ -9,51 +9,57 @@
 		/*border: solid 1px blue;*/
 		}
 </style>
-<div class="login">
+<div class="">
+	{{errMSG}}
 	<form method="POST">
-		<h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
-		  <small class="alert-danger text-left"><?php echo form_error('passwd'); ?></small>
-		  <div class="form-group">
-		  <label for="nom" class="sr-only">Nom</label>
-		  <input type="text" name="nom" id="nom" class="form-control" value="" placeholder="Nom de famille" required autofocus>
-		  <small class="alert-danger text-left"><?php echo form_error('nom'); ?></small>
-		  </div>
-		  <div class="form-group">
-		  <label for="prenom" class="sr-only">Prenom</label>
-		  <input type="text" name="prenom" id="prenom" class="form-control" value="" placeholder="Prenoms" required>
-		  <small class="alert-danger text-left"><?php echo form_error('prenom'); ?></small>
-		  </div>
-		  <div class="form-group text-left">
-		  <label for="niveau" class="sr-only">Niveau:</label>
-		  <select name="auth_level" id="niveau" class="form-control">
-			  <option value="" >Sélectionner niveau</option>
-			  <option value="3" >Troisieme</option>
-			  <option value="4" >Quatrieme</option>
-		  </select>
-		  <small class="alert-danger text-left"><?php echo form_error('auth_level'); ?></small>
-		  </div>
-		  <div class="form-group">
-		  <label for="email" class="sr-only">Prénom</label>
-		  <input type="text" name="email" id="email" class="form-control" value="" placeholder="Adresse Email" required>
-		  <small class="alert-danger text-left"><?php echo form_error('email'); ?></small>
-		  </div>
-		  <div class="form-group">
-		  <label for="login_string" class="sr-only">Pseudo</label>
-		  <input type="text" name="username" id="login_string" class="form-control" value="" placeholder="Nom utilisateur" required>
-		  <small class="alert-danger text-left"><?php echo form_error('username'); ?></small>
-		  </div>
-		  <div class="form-group">
-		  <label for="login_pass" class="sr-only">Mot de passe</label>
-		  <input type="password" name="passwd" id="login_pass" class="form-control" placeholder="Mot de passe" required>	  
-		  </div>
-		  <div class="form-group">
-		  <label for="login_pass_conf" class="sr-only">Confirmation Mot de passe</label>
-		  <input type="password" name="passwd_conf" id="login_pass_conf" class="form-control" placeholder="Confirmer Mot de passe" required>	  
-		  </div>
-			<p class="text-center"><a href="{{url_for('login')}}">J'ai déjà un compte !</a></p>
-		  <div class="form-group">
-		  <button type="submit" class="btn btn-lg btn-primary btn-block" name="submit">S'inscrire</button>
-		  </div>
+	<div class="row">
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="nom">Nom</label>
+		<input type="text" name="nom" class="form-control" id="nom" aria-describedby="nomHelp" placeholder="Nom de famille" required >
+		<small id="nomHelp" class="form-text text-muted">Veuillez entrer votre nom.</small>
+	  </div>
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="prenom">Prenom</label>
+		<input type="text" name="prenom" class="form-control" id="prenom" aria-describedby="prenomHelp" placeholder="Prenoms" required >
+		<small id="prenomHelp" class="form-text text-muted">Veuillez entrer votre prenom.</small>
+	  </div>
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="code">Code</label>
+		<input type="text" name="code" class="form-control" id="code" aria-describedby="codeHelp" placeholder="Code utilisateur" required >
+		<small id="codeHelp" class="form-text text-muted">Veuillez entrer votre code.</small>
+	  </div>
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="email">Email</label>
+		<input type="text" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Votre adresse email" required >
+		<small id="emailHelp" class="form-text text-muted">Veuillez entrer votre Email.</small>
+	  </div>
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="adresse">Adresse</label>
+		<input type="text" name="adresse" class="form-control" id="adresse" aria-describedby="adresseHelp" placeholder="Adresse Postale" required >
+		<small id="adresseHelp" class="form-text text-muted">Veuillez entrer votre Adresse.</small>
+	  </div>
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="niveau">Niveau</label>
+		<select name="niveau" class="form-control">
+			<option value="00">N/A</option>
+			<option value="01">1ere Annee</option>
+			<option value="02">2eme Annee</option>
+			<option value="03">3eme Annee</option>
+			<option value="04">4eme Annee</option>
+			<option value="05">5eme Annee</option>
+		</select>
+		<small id="niveauHelp" class="form-text text-muted">Veuillez choisir votre niveau.</small>
+	  </div>
+	  <div class="form-group col-md-6 col-sm-12">
+		<label for="telephone">Numero de telephone</label>
+		<input type="text" name="telephone" class="form-control" id="telephone" aria-describedby="telephoneHelp" placeholder="Numero de telephone" required >
+		<small id="telephoneHelp" class="form-text text-muted">Veuillez entrer votre telephone.</small>
+	  </div>
+	 <div class="form-group col-md-6 col-sm-12">
+		<button type="submit" name="mysubmit" value="mysubmit" class="btn btn-primary btn-block">ADD Person</button>
+                <p class="text-center mt-3"><a href="/subscribe">Inscription</a></p>
+        </div>
+	  </div>
 	</form>
 </div>
 {% endblock body %}

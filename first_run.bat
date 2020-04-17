@@ -1,4 +1,3 @@
-cd /home/yelemama/cours_python_web/
 python3 -m venv venv
 . venv/bin/activate
 pip install Flask
